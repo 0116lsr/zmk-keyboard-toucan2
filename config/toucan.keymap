@@ -11,7 +11,7 @@
 #define SYM  2
 #define ADJ  3
 
-&tps43_trackpad_listener {
+&trackpad_listener {     /* 👈 이 부분을 trackpad_listener 로 변경! */
     all_layers_mouse {
         layers = <1 2 3 4>;
         process-next;
