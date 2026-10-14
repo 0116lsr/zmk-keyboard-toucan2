@@ -11,10 +11,11 @@
 #define SYM  2
 #define ADJ  3
 
-&trackpad_listener {     /* 👈 이 부분을 trackpad_listener 로 변경! */
+&trackpad_listener {
     all_layers_mouse {
         layers = <1 2 3 4>;
-        process-next;
+        /* 스크롤 강제 변환을 해제하고, 모든 레이어에서 순수한 마우스 이동(BASE와 동일)으로 작동하게 합니다 */
+        input-processors = <&zip_report_passthrough>;
     };
 };
 
