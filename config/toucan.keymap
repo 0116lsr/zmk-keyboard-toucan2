@@ -11,14 +11,9 @@
 #define SYM  2
 #define ADJ  3
 
-&trackpad_listener {
-    all_layers_mouse {
-        layers = <1 2 3 4 5 6 7 8 9>; // 미래를 위해 9번 레이어까지 미리 지정
-        /* 강제 스크롤 변환을 무시하고 무조건 마우스 포인터 이동으로 작동하게 합니다 */
-        input-processors = <&zip_noop>;
-    };
+&tps43_trackpad_listener {
+    /delete-node/ scroller;
 };
-
 
 /{
 
