@@ -10,7 +10,6 @@
 #define SYM  2
 #define ADJ  3
 
-/* 스크롤 전환 비활성화: 존재하지 않는 레이어(15)로 덮어씀 */
 &trackpad_listener {
     scroller {
         layers = <15>;
@@ -18,6 +17,29 @@
 };
 
 / {
+    combos {
+        compatible = "zmk,combos";
+
+        // 기존 숫자 수직 콤보
+        combo_num1 { timeout-ms = <50>; key-positions = <1 13>; bindings = <&kp N1>; };
+        combo_num2 { timeout-ms = <50>; key-positions = <2 14>; bindings = <&kp N2>; };
+        combo_num3 { timeout-ms = <50>; key-positions = <3 15>; bindings = <&kp N3>; };
+        combo_num4 { timeout-ms = <50>; key-positions = <4 16>; bindings = <&kp N4>; };
+        combo_num5 { timeout-ms = <50>; key-positions = <5 17>; bindings = <&kp N5>; };
+
+        combo_num6 { timeout-ms = <50>; key-positions = <6 18>; bindings = <&kp N6>; };
+        combo_num7 { timeout-ms = <50>; key-positions = <7 19>; bindings = <&kp N7>; };
+        combo_num8 { timeout-ms = <50>; key-positions = <8 20>; bindings = <&kp N8>; };
+        combo_num9 { timeout-ms = <50>; key-positions = <9 21>; bindings = <&kp N9>; };
+        combo_num0 { timeout-ms = <50>; key-positions = <10 22>; bindings = <&kp N0>; };
+
+        // 신규 추가: 방향키 콤보
+        combo_up    { timeout-ms = <50>; key-positions = <7 19>;  bindings = <&kp UP>; };    // U + J
+        combo_down  { timeout-ms = <50>; key-positions = <19 31>; bindings = <&kp DOWN>; };  // J + M
+        combo_left  { timeout-ms = <50>; key-positions = <30 31>; bindings = <&kp LEFT>; };  // N + M
+        combo_right { timeout-ms = <50>; key-positions = <31 32>; bindings = <&kp RIGHT>; }; // M + ,
+    };
+
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
@@ -27,15 +49,22 @@
     };
 
     behaviors {
-        // 고속 타이핑 및 동시 입력 시 오입력을 완벽 방어하는 설정
+        // 더블 탭(따닥) 기능 정의 (TAB/ESC 전용)
+        td_tab_esc: tap_dance_tab_esc {
+            compatible = "zmk,behavior-tap-dance";
+            #binding-cells = <0>;
+            tapping-term-ms = <200>;
+            bindings = <&kp TAB>, <&kp ESC>;
+        };
+        
         mt_fast: behavior_mod_tap_fast {
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP_FAST";
             #binding-cells = <2>;
-            flavor = "tap-preferred";      // 동시 입력 시 무조건 '짧게 친 것(문자)' 우선
-            tapping-term-ms = <400>;       // 400ms(0.4초) 이상 확실히 꾹 눌러야 숫자 출력
-            quick-tap-ms = <200>;          // 동일 키 연타 시 홀드 무시
-            require-prior-idle-ms = <200>; // 다른 키와 겹쳐 쳐지면 묻지도 따지지도 않고 문자 출력
+            flavor = "tap-preferred";      
+            tapping-term-ms = <400>;       
+            quick-tap-ms = <200>;          
+            require-prior-idle-ms = <200>; 
             bindings = <&kp>, <&kp>;
         };
     };
@@ -46,11 +75,11 @@
         base {
             display-name = "BASE";
             bindings = <
-                // 길게(0.4초 이상) 누르면 숫자, 짧게 치거나 겹쳐 치면 문자
-                &kp TAB   &mt_fast N1 Q &mt_fast N2 W &mt_fast N3 E &mt_fast N4 R &mt_fast N5 T   &mt_fast N6 Y &mt_fast N7 U  &mt_fast N8 I  &mt_fast N9 O   &mt_fast N0 P    &kp BSPC
-                &kp LCTRL &kp A         &kp S         &kp D         &kp F         &kp G           &kp H         &kp J          &kp K          &kp L           &kp SEMI         &kp SQT
-                &kp LSHFT &kp Z         &kp X         &kp C         &kp V         &kp B           &kp N         &kp M          &kp COMMA      &kp DOT         &kp FSLH         &kp ESC
-                                                      &kp LGUI      &mo 1         &kp SPACE       &kp RET       &mo 2          &kp RALT
+                // J, N, M, COMMA를 일반 키로 되돌려 딜레이 완벽 제거
+                &td_tab_esc &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
+                &kp LCTRL   &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+                &kp LSHFT   &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
+                                  &kp LGUI &mo 1 &kp SPACE  &kp RET &mo 2 &kp RALT
             >;
         };
 
