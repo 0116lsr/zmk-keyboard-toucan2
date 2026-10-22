@@ -20,24 +20,32 @@
     combos {
         compatible = "zmk,combos";
 
-        // 기존 숫자 수직 콤보
-        combo_num1 { timeout-ms = <50>; key-positions = <1 13>; bindings = <&kp N1>; };
-        combo_num2 { timeout-ms = <50>; key-positions = <2 14>; bindings = <&kp N2>; };
-        combo_num3 { timeout-ms = <50>; key-positions = <3 15>; bindings = <&kp N3>; };
-        combo_num4 { timeout-ms = <50>; key-positions = <4 16>; bindings = <&kp N4>; };
-        combo_num5 { timeout-ms = <50>; key-positions = <5 17>; bindings = <&kp N5>; };
+        // 숫자 수직 콤보 (BASE 레이어 한정, Shift 누르면 !@#$%^&*() 입력 가능)
+        combo_num1 { timeout-ms = <85>; key-positions = <1 13>; bindings = <&kp N1>; layers = <0>; };
+        combo_num2 { timeout-ms = <85>; key-positions = <2 14>; bindings = <&kp N2>; layers = <0>; };
+        combo_num3 { timeout-ms = <85>; key-positions = <3 15>; bindings = <&kp N3>; layers = <0>; };
+        combo_num4 { timeout-ms = <85>; key-positions = <4 16>; bindings = <&kp N4>; layers = <0>; };
+        combo_num5 { timeout-ms = <85>; key-positions = <5 17>; bindings = <&kp N5>; layers = <0>; };
 
-        combo_num6 { timeout-ms = <50>; key-positions = <6 18>; bindings = <&kp N6>; };
-        combo_num7 { timeout-ms = <50>; key-positions = <7 19>; bindings = <&kp N7>; };
-        combo_num8 { timeout-ms = <50>; key-positions = <8 20>; bindings = <&kp N8>; };
-        combo_num9 { timeout-ms = <50>; key-positions = <9 21>; bindings = <&kp N9>; };
-        combo_num0 { timeout-ms = <50>; key-positions = <10 22>; bindings = <&kp N0>; };
+        combo_num6 { timeout-ms = <85>; key-positions = <6 18>; bindings = <&kp N6>; layers = <0>; };
+        combo_num7 { timeout-ms = <85>; key-positions = <7 19>; bindings = <&kp N7>; layers = <0>; };
+        combo_num8 { timeout-ms = <85>; key-positions = <8 20>; bindings = <&kp N8>; layers = <0>; };
+        combo_num9 { timeout-ms = <85>; key-positions = <9 21>; bindings = <&kp N9>; layers = <0>; };
+        combo_num0 { timeout-ms = <85>; key-positions = <10 22>; bindings = <&kp N0>; layers = <0>; };
 
-        // 신규 추가: 방향키 콤보
-        combo_up    { timeout-ms = <50>; key-positions = <7 19>;  bindings = <&kp UP>; };    // U + J
-        combo_down  { timeout-ms = <50>; key-positions = <19 31>; bindings = <&kp DOWN>; };  // J + M
-        combo_left  { timeout-ms = <50>; key-positions = <30 31>; bindings = <&kp LEFT>; };  // N + M
-        combo_right { timeout-ms = <50>; key-positions = <31 32>; bindings = <&kp RIGHT>; }; // M + ,
+        // 십자 방향키 콤보 (M 기준, BASE 레이어 한정)
+        combo_up    { timeout-ms = <85>; key-positions = <19 31>; bindings = <&kp UP>;    layers = <0>; };
+        combo_down  { timeout-ms = <85>; key-positions = <31 39>; bindings = <&kp DOWN>;  layers = <0>; };
+        combo_left  { timeout-ms = <85>; key-positions = <30 31>; bindings = <&kp LEFT>;  layers = <0>; };
+        combo_right { timeout-ms = <85>; key-positions = <31 32>; bindings = <&kp RIGHT>; layers = <0>; };
+
+        // 두음법 특수문자 3키 콤보 (BASE 레이어 한정, 타이머 100ms)
+        // LBRC 대신 LBKT([)를 넣어 평소엔 [, Shift+콤보 시 { 가 나오도록 수정
+        combo_lbkt  { timeout-ms = <100>; key-positions = <1 2 3>;    bindings = <&kp LBKT>;  layers = <0>; }; // Q + W + E = [ (Shift 누르면 { )
+        combo_rbkt  { timeout-ms = <100>; key-positions = <2 3 4>;    bindings = <&kp RBKT>;  layers = <0>; }; // W + E + R = ] (Shift 누르면 } )
+        combo_tilde { timeout-ms = <100>; key-positions = <13 14 15>; bindings = <&kp TILDE>; layers = <0>; }; // A + S + D = ~
+        combo_excl  { timeout-ms = <100>; key-positions = <14 15 16>; bindings = <&kp EXCL>;  layers = <0>; }; // S + D + F = !
+        combo_bslh  { timeout-ms = <100>; key-positions = <15 16 17>; bindings = <&kp BSLH>;  layers = <0>; }; // D + F + G = \ 
     };
 
     conditional_layers {
@@ -49,11 +57,10 @@
     };
 
     behaviors {
-        // 더블 탭(따닥) 기능 정의 (TAB/ESC 전용)
         td_tab_esc: tap_dance_tab_esc {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = <200>;
+            tapping-term-ms = ;
             bindings = <&kp TAB>, <&kp ESC>;
         };
         
@@ -63,8 +70,8 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";      
             tapping-term-ms = <400>;       
-            quick-tap-ms = <200>;          
-            require-prior-idle-ms = <200>; 
+            quick-tap-ms = ;          
+            require-prior-idle-ms = ; 
             bindings = <&kp>, <&kp>;
         };
     };
@@ -75,7 +82,6 @@
         base {
             display-name = "BASE";
             bindings = <
-                // J, N, M, COMMA를 일반 키로 되돌려 딜레이 완벽 제거
                 &td_tab_esc &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
                 &kp LCTRL   &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
                 &kp LSHFT   &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
