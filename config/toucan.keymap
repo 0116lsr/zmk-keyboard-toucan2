@@ -18,12 +18,24 @@
 };
 
 / {
-
     conditional_layers {
         compatible = "zmk,conditional-layers";
         tri_layer {
             if-layers = <1 2>;
             then-layer = <3>;
+        };
+    }; // <- 괄호 오류 수정 완료
+
+    behaviors {
+        // 고속 타이핑 시 오입력을 방지하는 커스텀 mod-tap 정의
+        mt_fast: behavior_mod_tap_fast {
+            compatible = "zmk,behavior-hold-tap";
+            label = "MOD_TAP_FAST";
+            #binding-cells = <2>;
+            flavor = "tap-unless-interrupted"; // 겹쳐 눌려도 손을 떼면 tap으로 인정
+            tapping-term-ms = <220>;          // 단타/홀드를 결정하는 기준 시간 (취향에 맞게 조정)
+            quick-tap-ms = <200>;             // 연타 시에는 홀드를 무시하고 연타 처리
+            bindings = <&kp>, <&kp>;
         };
     };
 
