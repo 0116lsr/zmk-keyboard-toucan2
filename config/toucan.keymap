@@ -27,15 +27,15 @@
     };
 
     behaviors {
-        // 고속 타이핑 시 오입력을 방지하는 커스텀 mod-tap 정의
+        // 고속 타이핑 및 동시 입력 시 오입력을 완벽 방어하는 설정
         mt_fast: behavior_mod_tap_fast {
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP_FAST";
             #binding-cells = <2>;
-            flavor = "tap-preferred";      // 겹쳐 칠 때 탭(문자) 우선
-            tapping-term-ms = <200>;       // 단타/홀드 기준 시간
-            quick-tap-ms = <150>;          // 연타 시 홀드 무시
-            require-prior-idle-ms = <150>; // 직전 키 입력 후 150ms 이내 누르면 무조건 탭
+            flavor = "tap-preferred";      // 동시 입력 시 무조건 '짧게 친 것(문자)' 우선
+            tapping-term-ms = <400>;       // 400ms(0.4초) 이상 확실히 꾹 눌러야 숫자 출력
+            quick-tap-ms = <200>;          // 동일 키 연타 시 홀드 무시
+            require-prior-idle-ms = <200>; // 다른 키와 겹쳐 쳐지면 묻지도 따지지도 않고 문자 출력
             bindings = <&kp>, <&kp>;
         };
     };
@@ -46,7 +46,7 @@
         base {
             display-name = "BASE";
             bindings = <
-                // 맨 윗줄: 길게 누르면 숫자(N1~N0), 짧게 누르면 문자(Q~P)
+                // 길게(0.4초 이상) 누르면 숫자, 짧게 치거나 겹쳐 치면 문자
                 &kp TAB   &mt_fast N1 Q &mt_fast N2 W &mt_fast N3 E &mt_fast N4 R &mt_fast N5 T   &mt_fast N6 Y &mt_fast N7 U  &mt_fast N8 I  &mt_fast N9 O   &mt_fast N0 P    &kp BSPC
                 &kp LCTRL &kp A         &kp S         &kp D         &kp F         &kp G           &kp H         &kp J          &kp K          &kp L           &kp SEMI         &kp SQT
                 &kp LSHFT &kp Z         &kp X         &kp C         &kp V         &kp B           &kp N         &kp M          &kp COMMA      &kp DOT         &kp FSLH         &kp ESC
