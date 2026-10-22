@@ -40,12 +40,11 @@
         combo_right { timeout-ms = <85>; key-positions = <31 32>; bindings = <&kp RIGHT>; layers = <0>; };
 
         // 두음법 특수문자 3키 콤보 (BASE 레이어 한정, 타이머 100ms)
-        // LBRC 대신 LBKT([)를 넣어 평소엔 [, Shift+콤보 시 { 가 나오도록 수정
         combo_lbkt  { timeout-ms = <100>; key-positions = <1 2 3>;    bindings = <&kp LBKT>;  layers = <0>; }; // Q + W + E = [ (Shift 누르면 { )
         combo_rbkt  { timeout-ms = <100>; key-positions = <2 3 4>;    bindings = <&kp RBKT>;  layers = <0>; }; // W + E + R = ] (Shift 누르면 } )
         combo_tilde { timeout-ms = <100>; key-positions = <13 14 15>; bindings = <&kp TILDE>; layers = <0>; }; // A + S + D = ~
         combo_excl  { timeout-ms = <100>; key-positions = <14 15 16>; bindings = <&kp EXCL>;  layers = <0>; }; // S + D + F = !
-        combo_bslh  { timeout-ms = <100>; key-positions = <15 16 17>; bindings = <&kp BSLH>;  layers = <0>; }; // D + F + G = \ 
+        combo_bslh  { timeout-ms = <100>; key-positions = <15 16 17>; bindings = <&kp BSLH>;  layers = <0>; }; // D + F + G = 백슬래시
     };
 
     conditional_layers {
@@ -60,7 +59,7 @@
         td_tab_esc: tap_dance_tab_esc {
             compatible = "zmk,behavior-tap-dance";
             #binding-cells = <0>;
-            tapping-term-ms = ;
+            tapping-term-ms = <200>;
             bindings = <&kp TAB>, <&kp ESC>;
         };
         
@@ -70,8 +69,8 @@
             #binding-cells = <2>;
             flavor = "tap-preferred";      
             tapping-term-ms = <400>;       
-            quick-tap-ms = ;          
-            require-prior-idle-ms = ; 
+            quick-tap-ms = <200>;          
+            require-prior-idle-ms = <200>; 
             bindings = <&kp>, <&kp>;
         };
     };
