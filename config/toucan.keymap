@@ -12,8 +12,8 @@
 
 &trackpad_listener {
     scroller {
-        // 모든 사용 레이어에서 스크롤 작동
-        layers = <0 1 2 3 4>;
+        // 모든 1손가락 터치가 스크롤로 바뀌는 것을 막기 위해 원래대로(15) 되돌림
+        layers = <15>;
     };
 };
 
@@ -67,7 +67,6 @@
     };
 
     behaviors {
-        // ZMK Studio에서 사용하기 위해 복구된 커스텀 Mod-Tap
         mt_fast: behavior_mod_tap_fast {
             compatible = "zmk,behavior-hold-tap";
             label = "MOD_TAP_FAST";
