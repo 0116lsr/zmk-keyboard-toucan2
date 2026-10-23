@@ -20,7 +20,10 @@
     combos {
         compatible = "zmk,combos";
 
-        // 숫자 수직 콤보 (BASE 레이어 한정, Shift 누르면 !@#$%^&*() 입력 가능)
+        // ESC 3키 콤보 (TAB + Q + W)
+        combo_esc { timeout-ms = <150>; key-positions = <0 1 2>; bindings = <&kp ESC>; layers = <0>; };
+
+        // 숫자 수직 콤보 (BASE 레이어 한정)
         combo_num1 { timeout-ms = <85>; key-positions = <1 13>; bindings = <&kp N1>; layers = <0>; };
         combo_num2 { timeout-ms = <85>; key-positions = <2 14>; bindings = <&kp N2>; layers = <0>; };
         combo_num3 { timeout-ms = <85>; key-positions = <3 15>; bindings = <&kp N3>; layers = <0>; };
@@ -33,18 +36,22 @@
         combo_num9 { timeout-ms = <85>; key-positions = <9 21>; bindings = <&kp N9>; layers = <0>; };
         combo_num0 { timeout-ms = <85>; key-positions = <10 22>; bindings = <&kp N0>; layers = <0>; };
 
-        // 십자 방향키 콤보 (M 기준, BASE 레이어 한정)
-        combo_up    { timeout-ms = <85>; key-positions = <19 31>; bindings = <&kp UP>;    layers = <0>; };
-        combo_down  { timeout-ms = <85>; key-positions = <31 39>; bindings = <&kp DOWN>;  layers = <0>; };
-        combo_left  { timeout-ms = <85>; key-positions = <30 31>; bindings = <&kp LEFT>;  layers = <0>; };
-        combo_right { timeout-ms = <85>; key-positions = <31 32>; bindings = <&kp RIGHT>; layers = <0>; };
+        // 방향키 콤보 (M 기준, BASE 레이어 한정)
+        combo_up    { timeout-ms = <85>;  key-positions = <19 31>;    bindings = <&kp UP>;    layers = <0>; };
+        combo_left  { timeout-ms = <85>;  key-positions = <30 31>;    bindings = <&kp LEFT>;  layers = <0>; };
+        combo_right { timeout-ms = <85>;  key-positions = <31 32>;    bindings = <&kp RIGHT>; layers = <0>; };
+        combo_down  { timeout-ms = <150>; key-positions = <30 31 32>; bindings = <&kp DOWN>;  layers = <0>; }; // N + M + COMMA (3키)
 
-        // 두음법 특수문자 3키 콤보 (BASE 레이어 한정, 타이머 100ms)
-        combo_lbkt  { timeout-ms = <100>; key-positions = <1 2 3>;    bindings = <&kp LBKT>;  layers = <0>; }; // Q + W + E = [ (Shift 누르면 { )
-        combo_rbkt  { timeout-ms = <100>; key-positions = <2 3 4>;    bindings = <&kp RBKT>;  layers = <0>; }; // W + E + R = ] (Shift 누르면 } )
-        combo_tilde { timeout-ms = <100>; key-positions = <13 14 15>; bindings = <&kp TILDE>; layers = <0>; }; // A + S + D = ~
-        combo_excl  { timeout-ms = <100>; key-positions = <14 15 16>; bindings = <&kp EXCL>;  layers = <0>; }; // S + D + F = !
-        combo_bslh  { timeout-ms = <100>; key-positions = <15 16 17>; bindings = <&kp BSLH>;  layers = <0>; }; // D + F + G = 백슬래시
+        // 두음법 특수문자 3키 콤보 (BASE 레이어 한정)
+        combo_lbkt  { timeout-ms = <150>; key-positions = <1 2 3>;    bindings = <&kp LBKT>;  layers = <0>; }; // Q + W + E = [
+        combo_rbkt  { timeout-ms = <150>; key-positions = <2 3 4>;    bindings = <&kp RBKT>;  layers = <0>; }; // W + E + R = ]
+        combo_tilde { timeout-ms = <150>; key-positions = <13 14 15>; bindings = <&kp TILDE>; layers = <0>; }; // A + S + D = ~
+        combo_excl  { timeout-ms = <150>; key-positions = <14 15 16>; bindings = <&kp EXCL>;  layers = <0>; }; // S + D + F = !
+        combo_bslh  { timeout-ms = <150>; key-positions = <15 16 17>; bindings = <&kp BSLH>;  layers = <0>; }; // D + F + G = 백슬래시
+
+        // 괄호 3키 콤보 (BASE 레이어 한정)
+        combo_lpar  { timeout-ms = <150>; key-positions = <25 26 27>; bindings = <&kp LPAR>;  layers = <0>; }; // Z + X + C = (
+        combo_rpar  { timeout-ms = <150>; key-positions = <26 27 28>; bindings = <&kp RPAR>;  layers = <0>; }; // X + C + V = )
     };
 
     conditional_layers {
@@ -55,36 +62,16 @@
         };
     };
 
-    behaviors {
-        td_tab_esc: tap_dance_tab_esc {
-            compatible = "zmk,behavior-tap-dance";
-            #binding-cells = <0>;
-            tapping-term-ms = <200>;
-            bindings = <&kp TAB>, <&kp ESC>;
-        };
-        
-        mt_fast: behavior_mod_tap_fast {
-            compatible = "zmk,behavior-hold-tap";
-            label = "MOD_TAP_FAST";
-            #binding-cells = <2>;
-            flavor = "tap-preferred";      
-            tapping-term-ms = <400>;       
-            quick-tap-ms = <200>;          
-            require-prior-idle-ms = <200>; 
-            bindings = <&kp>, <&kp>;
-        };
-    };
-
     keymap {
         compatible = "zmk,keymap";
 
         base {
             display-name = "BASE";
             bindings = <
-                &td_tab_esc &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
-                &kp LCTRL   &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-                &kp LSHFT   &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
-                                  &kp LGUI &mo 1 &kp SPACE  &kp RET &mo 2 &kp RALT
+                &kp TAB   &kp Q &kp W &kp E &kp R &kp T   &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSPC
+                &kp LCTRL &kp A &kp S &kp D &kp F &kp G   &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
+                &kp LSHFT &kp Z &kp X &kp C &kp V &kp B   &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp ESC
+                                &kp LGUI &mo 1 &kp SPACE  &kp RET &mo 2 &kp RALT
             >;
         };
 
