@@ -12,7 +12,8 @@
 
 &trackpad_listener {
     scroller {
-        layers = <15>;
+        // 모든 사용 레이어에서 스크롤 작동
+        layers = <0 1 2 3 4>;
     };
 };
 
@@ -20,8 +21,11 @@
     combos {
         compatible = "zmk,combos";
 
-        // ESC 3키 콤보 (TAB + Q + W)
-        combo_esc { timeout-ms = <150>; key-positions = <0 1 2>; bindings = <&kp ESC>; layers = <0>; };
+        // 기존 ESC 3키 콤보 (TAB + Q + W)
+        combo_esc_3key { timeout-ms = <150>; key-positions = <0 1 2>; bindings = <&kp ESC>; layers = <0>; };
+        
+        // 추가된 ESC 수직 콤보 (TAB + LCTRL)
+        combo_esc_tab_ctrl { timeout-ms = <150>; key-positions = <0 12>; bindings = <&kp ESC>; layers = <0>; };
 
         // 숫자 수직 콤보 (BASE 레이어 한정)
         combo_num1 { timeout-ms = <85>; key-positions = <1 13>; bindings = <&kp N1>; layers = <0>; };
