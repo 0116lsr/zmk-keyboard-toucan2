@@ -59,11 +59,11 @@
 
         // ===== 새로 추가한 콤보 =====
         // 2키 콤보 (BASE 레이어 한정)
-        combo_minus { timeout-ms = <85>;  key-positions = <1 2>;      bindings = <&kp MINUS>; layers = <0>; }; // Q + W = -
-        combo_plus  { timeout-ms = <85>;  key-positions = <3 4>;      bindings = <&kp PLUS>;  layers = <0>; }; // E + R = +
-
-        // 마이크 3키 콤보 (BASE 레이어 한정)
-        combo_mic   { timeout-ms = <150>; key-positions = <27 28 29>; bindings = <&kp C_VOICE_COMMAND>; layers = <0>; }; // C + V + B = 음성 명령
+        combo_minus { timeout-ms = <85>;  key-positions = <1 2>;      bindings = <&kp MINUS>;       layers = <0>; }; // Q + W = -
+        combo_plus  { timeout-ms = <85>;  key-positions = <3 4>;      bindings = <&kp PLUS>;        layers = <0>; }; // E + R = +
+        combo_div   { timeout-ms = <85>;  key-positions = <13 14>;    bindings = <&kp FSLH>;        layers = <0>; }; // A + S = / (나누기)
+        combo_mul   { timeout-ms = <85>;  key-positions = <15 16>;    bindings = <&kp KP_MULTIPLY>; layers = <0>; }; // D + F = * (곱하기)
+        combo_eq    { timeout-ms = <85>;  key-positions = <27 28>;    bindings = <&kp EQUAL>;       layers = <0>; }; // C + V = =
 
         // 레노버 Smart Key (Google Search) 시도 (BASE 레이어 한정)
         combo_ai    { timeout-ms = <150>; key-positions = <3 4 5>;    bindings = <&kp C_AC_SEARCH>; layers = <0>; }; // E + R + T = 검색 키
@@ -139,7 +139,7 @@
                 &trans &trans &trans &trans &trans &trans           &trans    &trans    &trans    &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans           &trans    &trans    &trans    &trans &trans &trans
                 &trans &trans &trans &trans &trans &trans           &trans    &trans    &trans    &trans &trans &trans
-                &kp C_VOICE_COMMAND &mkp LCLK &kp LC(EQUAL)         &mkp LCLK &mkp RCLK &kp LC(MINUS)
+                    &kp C_AC_SEARCH &kp LC(MINUS) &kp LC(EQUAL)     &mkp LCLK &mkp RCLK &kp LC(MINUS)
             >;
         };
 
